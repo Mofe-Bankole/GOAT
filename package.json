@@ -1,0 +1,30 @@
+{
+  "name": "goat-yield-asp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-strip-types src/server.ts",
+    "dev": "node --watch --experimental-strip-types src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test"
+  },
+  "dependencies": {
+    "fastify": "^5.10.0",
+    "@fastify/type-provider-typebox": "^5.1.0",
+    "@sinclair/typebox": "^0.34.50",
+    "@fastify/express": "^4.0.7",
+    "@fastify/cors": "^11.3.0",
+    "@fastify/rate-limit": "^11.1.0",
+    "@fastify/error": "^4.2.0",
+    "env-schema": "^7.0.0",
+    "fastify-plugin": "^6.0.0",
+    "@okxweb3/x402-express": "^0.1.1",
+    "@okxweb3/x402-core": "^0.1.0",
+    "@okxweb3/x402-evm": "^0.2.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "@types/node": "^22.0.0"
+  }
+}
