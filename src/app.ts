@@ -7,6 +7,7 @@ import configPlugin from './plugins/config.ts'
 import cachePlugin from './plugins/cache.ts'
 import defillamaPlugin from './plugins/defillama.ts'
 import x402Plugin from './plugins/x402.ts'
+import demoRoutes from './routes/demo.ts'
 import optimizeRoutes from './routes/optimize.ts'
 import subscribeRoutes from './routes/subscribe.ts'
 import { startWatcher } from './services/yield-watcher.ts'
@@ -27,6 +28,8 @@ export async function buildApp(): Promise<AppInstance> {
   await app.register(defillamaPlugin)
 
   app.get('/health', async () => ({ status: 'ok', timestamp: Date.now() }))
+
+  await app.register(demoRoutes)
 
   await app.register(x402Plugin)
 
