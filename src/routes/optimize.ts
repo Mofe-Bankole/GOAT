@@ -5,6 +5,8 @@ import { scanPools } from '../services/pool-scanner.ts'
 import { scorePool } from '../services/risk-scorer.ts'
 import { calculateApy } from '../services/apy-calculator.ts'
 import { rankPools } from '../services/ranker.ts'
+import { verifyPoolOnchain } from '../services/onchain-verifier.ts'
+import type { OnchainVerification } from '../types/index.ts'
 import { DefiLlamaError } from '../utils/errors.ts'
 import crypto from 'node:crypto'
 
@@ -51,22 +53,28 @@ export default async function optimizeRoutes(fastify: FastifyInstance) {
 
     const riskScores = new Map<string, ReturnType<typeof scorePool>>()
     const apyValues = new Map<string, ReturnType<typeof calculateApy>>()
+    const onchainResults = new Map<string, OnchainVerification>()
 
-    for (const pool of scanned) {
-      const slug = pool.project.toLowerCase().replace(/\s+/g, '-')
-      const protocolMeta = protocolMetaMap.get(slug)
-      const poolKey = pool.pool
+    await Promise.allSettled(
+      scanned.map(async (pool) => {
+        const slug = pool.project.toLowerCase().replace(/\s+/g, '-')
+        const protocolMeta = protocolMetaMap.get(slug)
+        const poolKey = pool.pool
 
-      const risk = scorePool(pool, protocolMeta)
-      riskScores.set(poolKey, risk)
+        const onchain = await verifyPoolOnchain(pool, fastify.config.RPC_URLS)
+        onchainResults.set(poolKey, onchain)
 
-      const apy = calculateApy(pool, params.execution_context)
-      apyValues.set(poolKey, apy)
-    }
+        const risk = scorePool(pool, protocolMeta, onchain)
+        riskScores.set(poolKey, risk)
+
+        const apy = calculateApy(pool, params.execution_context)
+        apyValues.set(poolKey, apy)
+      })
+    )
 
     const riskTolerance = params.risk_tolerance ?? 'moderate'
     const maxResults = params.max_results ?? 10
-    const ranked = rankPools(scanned, riskScores, apyValues, riskTolerance, maxResults)
+    const ranked = rankPools(scanned, riskScores, apyValues, riskTolerance, maxResults, onchainResults)
 
     const chainsCovered = [...new Set(scanned.map(p => SUPPORTED_CHAINS[p.chainCaip2] ?? p.chain))]
 

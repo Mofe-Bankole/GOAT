@@ -1,6 +1,6 @@
 import type { ScannedPool } from './pool-scanner.ts'
 import type { RiskScore } from './risk-scorer.ts'
-import type { APY } from '../types/index.ts'
+import type { APY, OnchainVerification } from '../types/index.ts'
 import { SUPPORTED_CHAINS } from '../types/index.ts'
 
 const CHAIN_PRIORITY: Record<string, number> = {
@@ -24,6 +24,7 @@ export interface RankedPool {
     method: string
     calldata_tips?: string
   }
+  onchain?: OnchainVerification
   updated_at: number
 }
 
@@ -51,7 +52,8 @@ export function rankPools(
   riskScores: Map<string, RiskScore>,
   apyValues: Map<string, APY>,
   riskTolerance: 'low' | 'moderate' | 'high',
-  maxResults: number
+  maxResults: number,
+  onchainResults?: Map<string, OnchainVerification>
 ): RankedPool[] {
   const riskMultiplier: Record<string, number> = {
     low: 0,
@@ -96,6 +98,7 @@ export function rankPools(
     risk_score: item.risk.score,
     risk_factors: item.risk.factors,
     entry: determineEntry(item.pool),
+    onchain: onchainResults?.get(item.pool.pool),
     updated_at: Date.now(),
   }))
 }

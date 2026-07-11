@@ -40,6 +40,13 @@ export const EntrySchema = Type.Object({
 
 export type Entry = Static<typeof EntrySchema>
 
+export const OnchainVerificationSchema = Type.Object({
+  verified: Type.Union([Type.Boolean(), Type.Null()]),
+  note: Type.String(),
+})
+
+export type OnchainVerification = Static<typeof OnchainVerificationSchema>
+
 export const PoolResultSchema = Type.Object({
   rank: Type.Number(),
   protocol: Type.String(),
@@ -57,6 +64,7 @@ export const PoolResultSchema = Type.Object({
   ]),
   risk_factors: Type.Array(Type.String()),
   entry: EntrySchema,
+  onchain: Type.Optional(OnchainVerificationSchema),
   updated_at: Type.Number(),
 })
 
@@ -144,6 +152,42 @@ export interface DefiLlamaProtocol {
 export interface Caip2Mapping {
   [caip2: string]: string
 }
+
+export const SubscribeRequestSchema = Type.Object({
+  webhook_url: Type.String({ format: 'uri' }),
+  params: Type.Object({
+    assets: Type.Array(Type.String(), { minItems: 1 }),
+    chains: Type.Optional(Type.Array(Type.String())),
+    risk_tolerance: Type.Optional(Type.Union([
+      Type.Literal('low'),
+      Type.Literal('moderate'),
+      Type.Literal('high'),
+    ])),
+    min_tvl_usd: Type.Optional(Type.Number({ default: 100000 })),
+    max_results: Type.Optional(Type.Number({ default: 10 })),
+    min_apy: Type.Optional(Type.Number()),
+  }),
+})
+
+export type SubscribeRequest = Static<typeof SubscribeRequestSchema>
+
+export const SubscriptionResponseSchema = Type.Object({
+  id: Type.String(),
+  webhook_url: Type.String(),
+  params: Type.Object({
+    assets: Type.Array(Type.String()),
+    chains: Type.Optional(Type.Array(Type.String())),
+    risk_tolerance: Type.Optional(Type.String()),
+    min_tvl_usd: Type.Optional(Type.Number()),
+    max_results: Type.Optional(Type.Number()),
+    min_apy: Type.Optional(Type.Number()),
+  }),
+  last_notified: Type.Union([Type.Number(), Type.Null()]),
+  hook_failures: Type.Number(),
+  created: Type.Number(),
+})
+
+export type SubscriptionResponse = Static<typeof SubscriptionResponseSchema>
 
 export const SUPPORTED_CHAINS: Caip2Mapping = {
   'eip155:196': 'X Layer',

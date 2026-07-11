@@ -1,4 +1,4 @@
-import type { DefiLlamaPool, DefiLlamaProtocol } from '../types/index.ts'
+import type { DefiLlamaPool, DefiLlamaProtocol, OnchainVerification } from '../types/index.ts'
 
 const BLUE_CHIP_ASSETS = ['USDC', 'USDT', 'DAI', 'ETH', 'WBTC', 'WETH', 'stETH']
 
@@ -9,7 +9,8 @@ export interface RiskScore {
 
 export function scorePool(
   pool: DefiLlamaPool,
-  protocolMeta?: DefiLlamaProtocol | null
+  protocolMeta?: DefiLlamaProtocol | null,
+  onchain?: OnchainVerification | null
 ): RiskScore {
   const factors: string[] = []
   const isAudited = protocolMeta?.audit !== undefined && protocolMeta.audit !== null && protocolMeta.audit !== ''
@@ -22,6 +23,14 @@ export function scorePool(
     : BLUE_CHIP_ASSETS.some(a => pool.symbol.includes(a))
   const isFarmToken = pool.rewardTokens !== null && pool.rewardTokens.length > 0 &&
     !pool.rewardTokens.some(r => BLUE_CHIP_ASSETS.some(b => r.toLowerCase().includes(b.toLowerCase())))
+
+  if (onchain && onchain.verified === false) {
+    factors.push('pool contract not found on-chain')
+  } else if (onchain && onchain.verified === true) {
+    factors.push('contract verified on-chain')
+  } else if (onchain && onchain.verified === null) {
+    factors.push('on-chain verification unavailable')
+  }
 
   // Score 1: Treasury (>$50M TVL, audited, >6 months, blue-chip)
   if (pool.tvlUsd >= 50_000_000 && isAudited && ageDays >= 180 && hasBlueChipAssets) {

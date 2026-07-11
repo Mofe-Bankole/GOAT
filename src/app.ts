@@ -8,6 +8,8 @@ import cachePlugin from './plugins/cache.ts'
 import defillamaPlugin from './plugins/defillama.ts'
 import x402Plugin from './plugins/x402.ts'
 import optimizeRoutes from './routes/optimize.ts'
+import subscribeRoutes from './routes/subscribe.ts'
+import { startWatcher } from './services/yield-watcher.ts'
 
 export type AppInstance = FastifyInstance
 
@@ -29,6 +31,15 @@ export async function buildApp(): Promise<AppInstance> {
   await app.register(x402Plugin)
 
   await app.register(optimizeRoutes)
+  await app.register(subscribeRoutes)
+
+  app.addHook('onReady', () => {
+    const watcher = startWatcher(app.defillama, app.config.RPC_URLS)
+    app.addHook('onClose', (_instance, done) => {
+      watcher.stop()
+      done()
+    })
+  })
 
   app.setErrorHandler((error: FastifyError, request, reply) => {
     request.log.error({ err: error }, 'Request error')
