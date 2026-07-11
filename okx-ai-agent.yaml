@@ -1,0 +1,32 @@
+name: GOAT Yield Optimizer
+tagline: Find the best risk-adjusted DeFi yield across chains
+description: >
+  A pay-per-call AI agent that scans DeFi protocols across X Layer, Base,
+  and Ethereum and returns ranked, risk-scored yield opportunities with
+  on-chain contract verification. Built for agent-to-agent (A2A) use —
+  any DeFi agent, vault manager, or portfolio rebalancer can call this
+  endpoint to decide where to deploy capital.
+category: Finance Copilot
+protocol: x402
+network: eip155:196
+price: $0.02/call
+endpoint: https://goat-yield-asp.vercel.app/api/optimize
+capabilities:
+  - Multi-chain yield scanning (X Layer, Base, Ethereum)
+  - Risk scoring (1-5) based on TVL, audit status, protocol age
+  - On-chain contract verification via eth_getCode
+  - Net APY estimation after gas costs
+  - Asset-specific and chain-specific filtering
+  - Webhook subscriptions for yield change alerts
+example_request:
+  assets: ["USDC", "ETH"]
+  chains: ["eip155:196", "eip155:8453"]
+  risk_tolerance: moderate
+  min_tvl_usd: 100000
+  max_results: 10
+tags:
+  - defi
+  - yield
+  - risk-scoring
+  - aave
+  - compound

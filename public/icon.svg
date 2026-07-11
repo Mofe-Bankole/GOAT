@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="256" y2="256">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="48" fill="url(#g)"/>
+  <text x="128" y="140" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="800" font-size="80" fill="#052e16" text-anchor="middle" dominant-baseline="middle">GOAT</text>
+  <text x="128" y="185" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="600" font-size="22" fill="#052e16" text-anchor="middle" dominant-baseline="middle" opacity="0.8">YIELD</text>
+</svg>
