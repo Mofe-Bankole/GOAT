@@ -26,14 +26,12 @@ export default async function optimizeRoutes(fastify: FastifyInstance) {
   }, async (request, reply) => {
     const params = request.body as QueryParams
 
-    const fetchStart = Date.now()
     let allPools
     try {
       allPools = await fastify.defillama.fetchAllPools()
     } catch (err) {
       throw new DefiLlamaError(err instanceof Error ? err.message : 'unknown error')
     }
-    const fetchDuration = Date.now() - fetchStart
 
     const scanned = scanPools(params, allPools)
 
@@ -87,7 +85,7 @@ export default async function optimizeRoutes(fastify: FastifyInstance) {
       meta: {
         total_pools_scanned: scanned.length,
         chains_covered: chainsCovered,
-        data_freshness_seconds: Math.max(1, Math.floor(fetchDuration / 1000)),
+        data_freshness_seconds: fastify.config.CACHE_TTL_SECONDS,
       },
     }
   })

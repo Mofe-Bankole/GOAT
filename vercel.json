@@ -5,7 +5,10 @@
     }
   },
   "routes": [
+    { "src": "/", "dest": "/api/index.ts", "methods": ["GET"] },
+    { "src": "/health", "dest": "/api/index.ts", "methods": ["GET"] },
     { "src": "/api/optimize", "dest": "/api/index.ts", "methods": ["POST"] },
-    { "src": "/health", "dest": "/api/index.ts", "methods": ["GET"] }
+    { "src": "/api/subscribe", "dest": "/api/index.ts", "methods": ["POST"] },
+    { "src": "/api/subscribe/(.*)", "dest": "/api/index.ts", "methods": ["GET", "DELETE"] }
   ]
 }

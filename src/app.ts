@@ -2,6 +2,7 @@ import Fastify from 'fastify'
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 import type { FastifyInstance, FastifyError } from 'fastify'
 import cors from '@fastify/cors'
+import rateLimit from '@fastify/rate-limit'
 
 import configPlugin from './plugins/config.ts'
 import cachePlugin from './plugins/cache.ts'
@@ -25,6 +26,20 @@ export async function buildApp(): Promise<AppInstance> {
 
   await app.register(configPlugin)
   await app.register(cachePlugin)
+
+  await app.register(rateLimit, {
+    max: 100,
+    timeWindow: '1 minute',
+    keyGenerator: (request) => {
+      return request.ip
+    },
+    errorResponseBuilder: (request, context) => ({
+      statusCode: 429,
+      error: 'Too Many Requests',
+      message: `Rate limit exceeded. Max ${context.max} requests per ${context.after}. Try again later.`,
+    }),
+  })
+
   await app.register(defillamaPlugin)
 
   app.get('/health', async () => ({ status: 'ok', timestamp: Date.now() }))
