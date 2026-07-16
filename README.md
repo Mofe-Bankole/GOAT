@@ -4,6 +4,19 @@ Pay-per-call AI agent that scans DeFi protocols across X Layer, Base, and Ethere
 
 Built for the OKX.AI Genesis Hackathon (Finance Copilot / Revenue Rocket tracks).
 
+## Why Demeter?
+
+Most yield scrapers mirror DefiLlama. Demeter goes further — every pool contract is verified on-chain via `eth_getCode` before it reaches you. Autonomous agents moving real capital get deterministic trust, not stale off-chain metadata. **This is the security layer of DeFi AI.**
+
+| Feature | DefiLlama API | Demeter |
+|---------|--------------|---------|
+| APY + TVL data | Yes | Yes (same source) |
+| Risk scoring | Raw numbers only | 5-tier model (audit, TVL depth, age) |
+| On-chain verification | No | eth_getCode on every pool contract |
+| Agent-native API | No (human UI) | Yes, built for A2A |
+| Push notifications | No | Webhook subscriptions |
+| Micropayments | No | x402 ($0.02/call) |
+
 ## Quick Start
 
 ```bash
@@ -101,3 +114,12 @@ npm run typecheck
 ## Deploy
 
 Deploy as a Vercel serverless function. See `vercel.json` and `api/index.ts`.
+
+## Roadmap
+
+| Phase | Timeline | Feature |
+|-------|----------|---------|
+| MVP | Hackathon | On-chain verified yield scanning + webhooks |
+| Phase 2 | Post-launch | Historical APY trends, volatility tracking |
+| Phase 3 | Month 2 | Dynamic auto-rebalancing vaults — agents deposit capital into smart vaults that auto-route based on Demeter's real-time signals |
+| Phase 4 | Month 3 | Premium tiers: sub-second polling, MEV-aware routing, custom alerts |

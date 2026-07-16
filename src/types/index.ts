@@ -43,6 +43,14 @@ export type Entry = Static<typeof EntrySchema>
 export const OnchainVerificationSchema = Type.Object({
   verified: Type.Union([Type.Boolean(), Type.Null()]),
   note: Type.String(),
+  upgradeable: Type.Optional(Type.Union([Type.Boolean(), Type.Null()])),
+  admin_type: Type.Optional(Type.Union([
+    Type.Literal('eoa'),
+    Type.Literal('contract'),
+    Type.Literal('none'),
+    Type.Null(),
+  ])),
+  admin_address: Type.Optional(Type.Union([Type.String(), Type.Null()])),
 })
 
 export type OnchainVerification = Static<typeof OnchainVerificationSchema>

@@ -32,6 +32,12 @@ export function scorePool(
     factors.push('on-chain verification unavailable')
   }
 
+  if (onchain?.admin_type === 'eoa') {
+    factors.push('EOA-controlled upgrade authority (single-key rug risk)')
+  } else if (onchain?.admin_type === 'contract') {
+    factors.push('contract-controlled upgrade authority')
+  }
+
   // Score 1: Treasury (>$50M TVL, audited, >6 months, blue-chip)
   if (pool.tvlUsd >= 50_000_000 && isAudited && ageDays >= 180 && hasBlueChipAssets) {
     return { score: 1, factors: ['treasury-grade pool'] }
