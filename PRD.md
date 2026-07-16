@@ -1,4 +1,4 @@
-# GOAT Yield Optimizer ASP
+# Demeter Yield Optimizer ASP
 
 ## Agent Service Provider for OKX.AI Genesis Hackathon
 
@@ -118,7 +118,7 @@ A pay-per-call AI agent that scans DeFi protocols across multiple chains and ret
                │  + x402 payment header
                ▼
 ┌──────────────────────────────────────────────────┐
-│              GOAT Yield ASP Server                │
+│              Demeter Yield ASP Server                │
 │  ┌────────────────────────────────────────────┐   │
 │  │  x402 Payment Middleware                    │   │
 │  │  (@okxweb3/x402-express)                   │   │
@@ -189,7 +189,7 @@ const PRICING = {
 ### 7.1 Agent Descriptor
 
 ```yaml
-name: GOAT Yield Optimizer
+name: Demeter Yield Optimizer
 tagline: Find the best risk-adjusted DeFi yield across chains
 category: Finance Copilot
 protocol: x402
@@ -213,7 +213,7 @@ capabilities:
 0:55  Agent picks one: "Enter Aave USDC pool at 12.4% APY"
 1:05  Show: payment settles on X Layer in seconds
 1:15  ROI pitch: "One call = $0.02. One bad decision = thousands lost."
-1:30  CTA: "List your ASP at okx.ai — GOAT Yield Optimizer"
+1:30  CTA: "List your ASP at okx.ai — Demeter Yield Optimizer"
 ```
 
 ---

@@ -5,7 +5,7 @@ const HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOAT Yield Optimizer — Demo</title>
+<title>Demeter Yield Optimizer — Demo</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -114,7 +114,7 @@ const HTML = `<!DOCTYPE html>
 <body>
 <div class="container">
   <header>
-    <h1>GOAT <span>Yield Optimizer</span></h1>
+    <h1>Demeter <span>Yield Optimizer</span></h1>
     <span class="badge">x402 · $0.02/call</span>
   </header>
 
@@ -164,7 +164,7 @@ const HTML = `<!DOCTYPE html>
 
   <div class="card">
     <h2>Quick Start (curl)</h2>
-    <pre style="background:#09090b; padding:1rem; border-radius:0.5rem; overflow-x:auto; font-size:0.8125rem; color:#a1a1aa;">curl -X POST https://goat-yield-asp.vercel.app/api/optimize \
+    <pre style="background:#09090b; padding:1rem; border-radius:0.5rem; overflow-x:auto; font-size:0.8125rem; color:#a1a1aa;">curl -X POST https://demeter-yield-asp.vercel.app/api/optimize \
   -H "Content-Type: application/json" \
   -d '{"assets":["USDC"],"risk_tolerance":"moderate"}'</pre>
   </div>
@@ -174,7 +174,7 @@ const HTML = `<!DOCTYPE html>
     <p style="font-size:0.875rem; color:#a1a1aa; margin-bottom:0.75rem;">
       Agents can subscribe to yield changes and get pushed updates instead of polling.
     </p>
-    <pre style="background:#09090b; padding:1rem; border-radius:0.5rem; overflow-x:auto; font-size:0.8125rem; color:#a1a1aa;">curl -X POST https://goat-yield-asp.vercel.app/api/subscribe \
+    <pre style="background:#09090b; padding:1rem; border-radius:0.5rem; overflow-x:auto; font-size:0.8125rem; color:#a1a1aa;">curl -X POST https://demeter-yield-asp.vercel.app/api/subscribe \
   -H "Content-Type: application/json" \
   -d '{"webhook_url":"https://youragent.com/hook","params":{"assets":["USDC"]}}'</pre>
   </div>

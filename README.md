@@ -1,4 +1,4 @@
-# GOAT Yield Optimizer ASP
+# Demeter Yield Optimizer ASP
 
 Pay-per-call AI agent that scans DeFi protocols across X Layer, Base, and Ethereum — returns ranked, risk-scored yield opportunities with on-chain verification.
 

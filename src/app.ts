@@ -36,7 +36,7 @@ export async function buildApp(): Promise<AppInstance> {
     errorResponseBuilder: (request, context) => ({
       statusCode: 429,
       error: 'Too Many Requests',
-      message: `Rate limit exceeded. Max ${context.max} requests per ${context.after}. Try again later.`,
+      message: `Rate limit exceeded. Max ${context.max} requests per ${context.after}. Please try again later.`,
     }),
   })
 

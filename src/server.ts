@@ -5,7 +5,7 @@ async function main() {
   const { PORT, HOST } = app.config
 
   await app.listen({ port: PORT, host: HOST })
-  app.log.info(`GOAT Yield Optimizer ASP running on http://${HOST}:${PORT}`)
+  app.log.info(`Demeter Yield Optimizer ASP running on http://${HOST}:${PORT}`)
 
   const shutdown = async (signal: string) => {
     app.log.info(`Received ${signal}, shutting down...`)
